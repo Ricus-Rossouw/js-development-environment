@@ -4,8 +4,10 @@
   "description": "Representation of a fully optimized JavaScript Development Environment for new JS projects.",
   "scripts": {
     "prestart": "babel-node build-scripts/start-message.js",
-    "start": "npm-run-all --parallel security-check open:src",
+    "start": "npm-run-all --parallel security-check open:src lint:watch",
     "open:src": "babel-node build-scripts/src-server.js",
+    "lint": "esw webpack.config.* src build-scripts --color",
+    "lint:watch": "npm run lint -- --watch",
     "security-check": "nsp check",
     "localtunnel": "lt --port 3000",
     "share": "npm-run-all --parallel open:src localtunnel"
