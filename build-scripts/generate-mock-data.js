@@ -9,7 +9,7 @@ import chalk from 'chalk';
 
 const json = JSON.stringify(jsf(schema));
 
-fs.writeFile('./src/api/db.json', json, (error) => {
+fs.writeFile('./src/api/db.json', json, function(error) {
   if (error) {
     return console.log(chalk.red(error));
   }

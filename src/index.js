@@ -1,4 +1,4 @@
-import { getThings } from './api/thing-api';
+import { getThings, deleteThing } from './api/thing-api';
 
 // Populate things via API Call
 getThings().then(result => {
@@ -7,7 +7,7 @@ getThings().then(result => {
   result.forEach(thing => {
     thingsBody += `
       <tr>
-        <td><a href="#" data-id="${thing.id}" class="deleteThing">Delete</a></td>
+        <td><a href="#" data-id="${thing.id}" class="delete-thing">Delete</a></td>
         <td>${thing.id}</td>
         <td>${thing.name}</td>
         <td>${thing.alias}</td>
@@ -17,4 +17,16 @@ getThings().then(result => {
   });
 
   global.document.getElementById('things').innerHTML = thingsBody;
+
+  const deleteLinks = global.document.getElementsByClassName('delete-thing');
+
+  Array.from(deleteLinks, link => {
+    link.onclick = function(event) {
+      const element = event.target;
+      event.preventDefault();
+      deleteThing(element.attributes['data-id'].value);
+      const row = element.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+  });
 });
